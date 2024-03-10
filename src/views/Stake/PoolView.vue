@@ -11,14 +11,21 @@
                 </Button>
             </template>
 
+<<<<<<< HEAD
             <template v-else>
                 <router-link :to="{ name: 'asset' }">
+=======
+        <template v-else-if="!walletAddress">
+            <section class="flex justify-end items-center gap-2 mb-6">
+                <!-- <router-link :to="{ name: 'wallet' }">
+>>>>>>> 7c0d1a2 (feat: wallet connect wagmi)
                     <Button class="btn-primary px-2 py-2 text-white">
                         <div class="flex justify-center gap-3">
                             <span class="text-xs">{{ account.shortAddress }}</span>
                             <i class="pi pi-wallet"></i>
                         </div>
                     </Button>
+<<<<<<< HEAD
                 </router-link>
 
                 <Button class="btn-primary px-2 py-2 text-white" @click="selectChain">
@@ -35,6 +42,13 @@
             </template>
 
         </section>
+=======
+                </router-link> -->
+
+                <w3m-button size="sm" label="Wallet" balance="show" />
+            </section>
+        </template>
+>>>>>>> 7c0d1a2 (feat: wallet connect wagmi)
 
         <h1 class="text-lg md:text-xl font-semibold mb-3">Pool</h1>
 
@@ -160,7 +174,14 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { ref, onMounted, watch, reactive } from 'vue'
+=======
+import { ref, onMounted, watch } from 'vue'
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
+import { mainnet, arbitrum, sepolia } from 'viem/chains'
+import { getAccount, reconnect } from '@wagmi/core'
+>>>>>>> 7c0d1a2 (feat: wallet connect wagmi)
 import { Web3 } from 'web3'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
@@ -215,6 +236,7 @@ const usdtEstimatedEarn = ref(null)
 const isEthBtnClicked = ref(false)
 const isUsdtBtnClicked = ref(false)
 
+<<<<<<< HEAD
 // Wallet Connect
 const connect = async (chain) => {
     const handler = (state) => {
@@ -273,6 +295,41 @@ watch(chain, async (chain) => {
     walletBalance.value = web3.utils.fromWei(balance, 'ether')
 })
 
+=======
+const projectId = import.meta.env.VITE_PROJECT_ID
+
+const metadata = {
+    name: 'Web3Modal',
+    description: 'Web3Modal Example',
+    url: 'https://web3modal.com',
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+const chains = [mainnet, arbitrum, sepolia]
+
+const config = defaultWagmiConfig({
+    chains,
+    projectId,
+    metadata,
+    enableWalletConnect: true,
+    enableInjected: true,
+    enableEIP6963: true,
+    enableCoinbase: true
+})
+
+reconnect(config)
+
+createWeb3Modal({
+    wagmiConfig: config,
+    projectId,
+    enableAnalytics: true
+})
+
+const account = getAccount(config)
+
+console.log(account);
+
+>>>>>>> 7c0d1a2 (feat: wallet connect wagmi)
 const toggleCurrency = (currency) => {
     if (currency === 'ETH') {
         isEther.value = true
